@@ -22,7 +22,7 @@ class WatchConnectivityTests: XCTestCase {
         let ex = expectation(description: "Success callback")
         let session = MockSession.default() as! MockSession
         session.fail = false
-        session.sendMessage(["message": "test"]).then { response -> () in
+        session.sendMessage(["message": "test"]).done { response in
             XCTAssertEqual(response as! [String: String], ["response": "Success"])
             ex.fulfill()
         }.catch { _ in
@@ -41,7 +41,7 @@ class WatchConnectivityTests: XCTestCase {
         let ex = expectation(description: "Error callback")
         let session = MockSession.default() as! MockSession
         session.fail = true
-        session.sendMessage(["message": "test"]).then { response -> () in
+        session.sendMessage(["message": "test"]).done { response in
             XCTFail("Should not succeed")
         }.catch { error in
             XCTAssertEqual((error as NSError).domain, "Test")
